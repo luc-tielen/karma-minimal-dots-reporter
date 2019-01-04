@@ -3,13 +3,24 @@ var noOp = function() {};
 var defaultConfig = {
   success: ".",
   failure: "x",
+  colors: true,
   width: 80,
   showSummary: true
+};
+
+var green = function(str) {
+  return "\u001b[32m" + str + "\u001b[0m";
+};
+
+var red = function(str) {
+  return "\u001b[31m" + str + "\u001b[0m";
 };
 
 var MinimalDotsReporter = function(baseReporterDecorator, config) {
   baseReporterDecorator(this);
   var cfg = Object.assign(defaultConfig, config.minDotsReporter || {});
+  var success = cfg.colors ? green(cfg.success) : cfg.success;
+  var failure = cfg.colors ? red(cfg.failure) : cfg.failure;
 
   var column = 0;
   var writeResult = function(result) {
@@ -24,11 +35,11 @@ var MinimalDotsReporter = function(baseReporterDecorator, config) {
   };
 
   this.specSuccess = function() {
-    writeResult(cfg.success);
+    writeResult(success);
   };
 
   this.specFailure = function() {
-    writeResult(cfg.failure);
+    writeResult(failure);
   };
 
   this.onBrowserLog = noOp;
