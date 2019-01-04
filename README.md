@@ -31,7 +31,8 @@ module.exports = function(karma) {
       failure: "x",
       width: 100,
       showSummary: false,
-      showLogs: false
+      showLogs: false,
+      colors: true
     }
 
     // ...
