@@ -34,6 +34,10 @@ var MinimalDotsReporter = function(baseReporterDecorator, config) {
     }
   };
 
+  this.onBrowserLog = function() {
+    column = 0;
+  };
+
   this.specSuccess = function() {
     writeResult(success);
   };
@@ -41,8 +45,6 @@ var MinimalDotsReporter = function(baseReporterDecorator, config) {
   this.specFailure = function() {
     writeResult(failure);
   };
-
-  this.onBrowserLog = noOp;
 
   if (!cfg.showSummary) {
     this.onRunComplete = noOp;
