@@ -5,7 +5,8 @@ var defaultConfig = {
   failure: "x",
   colors: true,
   width: 80,
-  showSummary: true
+  showSummary: true,
+  showLogs: true
 };
 
 var green = function(str) {
@@ -34,7 +35,10 @@ var MinimalDotsReporter = function(baseReporterDecorator, config) {
     }
   };
 
-  this.onBrowserLog = function() {
+  this.onBrowserLog = function(browser, log) {
+    if (cfg.showLogs) {
+      process.stdout.write("LOG: " + log + "\r\n");
+    }
     column = 0;
   };
 
