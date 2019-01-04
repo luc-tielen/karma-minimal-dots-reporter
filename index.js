@@ -1,14 +1,17 @@
+var noOp = function() {};
+
 var defaultConfig = {
   success: ".",
   failure: "x",
-  width: 80
+  width: 80,
+  showSummary: true
 };
 
 var MinimalDotsReporter = function(baseReporterDecorator, config) {
   baseReporterDecorator(this);
   var cfg = Object.assign(defaultConfig, config.minDotsReporter || {});
-  var column = 0;
 
+  var column = 0;
   var writeResult = function(result) {
     if (column > cfg.width) {
       process.stdout.write(result);
@@ -28,7 +31,11 @@ var MinimalDotsReporter = function(baseReporterDecorator, config) {
     writeResult(cfg.failure);
   };
 
-  this.onBrowserLog = function() {}; // no-op
+  this.onBrowserLog = noOp;
+
+  if (!cfg.showSummary) {
+    this.onRunComplete = noOp;
+  }
 };
 
 MinimalDotsReporter.$inject = ["baseReporterDecorator", "config"];
