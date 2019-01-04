@@ -1,18 +1,31 @@
 var defaultConfig = {
   success: ".",
-  failure: "x"
+  failure: "x",
+  width: 80
 };
 
 var MinimalDotsReporter = function(baseReporterDecorator, config) {
   baseReporterDecorator(this);
   var cfg = Object.assign(defaultConfig, config.minDotsReporter || {});
+  var column = 0;
+
+  var writeResult = function(result) {
+    if (column > cfg.width) {
+      process.stdout.write(result);
+      process.stdout.write("\r\n");
+      column = 0;
+    } else {
+      process.stdout.write(result);
+      column++;
+    }
+  };
 
   this.specSuccess = function() {
-    process.stdout.write(cfg.success);
+    writeResult(cfg.success);
   };
 
   this.specFailure = function() {
-    process.stdout.write(cfg.failure);
+    writeResult(cfg.failure);
   };
 
   this.onBrowserLog = function() {}; // no-op
