@@ -4,7 +4,6 @@ var defaultConfig = {
   success: ".",
   failure: "x",
   colors: true,
-  width: 80,
   showSummary: true,
   showLogs: true
 };
@@ -25,6 +24,11 @@ var MinimalDotsReporter = function(baseReporterDecorator, config) {
 
   var column = 0;
   var writeResult = function(result) {
+    if (!cfg.width) {
+      process.stdout.write(result);
+      return;
+    }
+
     if (column > cfg.width) {
       process.stdout.write(result);
       process.stdout.write("\r\n");
