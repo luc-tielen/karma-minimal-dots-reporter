@@ -6,5 +6,8 @@
   "repository": "https://github.com/luc-tielen/karma-minimal-dots-reporter.git",
   "author": "Luc Tielen",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "chalk": "^2.4.2"
+  }
 }

@@ -1,3 +1,5 @@
+const chalk = require("chalk");
+
 var noOp = function() {};
 
 var defaultConfig = {
@@ -8,19 +10,11 @@ var defaultConfig = {
   showLogs: true
 };
 
-var green = function(str) {
-  return "\u001b[32m" + str + "\u001b[0m";
-};
-
-var red = function(str) {
-  return "\u001b[31m" + str + "\u001b[0m";
-};
-
 var MinimalDotsReporter = function(baseReporterDecorator, config) {
   baseReporterDecorator(this);
   var cfg = Object.assign(defaultConfig, config.minDotsReporter || {});
-  var success = cfg.colors ? green(cfg.success) : cfg.success;
-  var failure = cfg.colors ? red(cfg.failure) : cfg.failure;
+  var success = cfg.colors ? chalk.green(cfg.success) : cfg.success;
+  var failure = cfg.colors ? chalk.red(cfg.failure) : cfg.failure;
 
   var column = 0;
   var writeResult = function(result) {
