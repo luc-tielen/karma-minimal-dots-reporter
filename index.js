@@ -4,7 +4,7 @@ var noOp = function() {};
 
 var defaultConfig = {
   success: ".",
-  failure: "x",
+  failure: "F",
   colors: true,
   showSummary: true,
   showLogs: true
