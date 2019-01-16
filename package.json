@@ -1,6 +1,6 @@
 {
   "name": "karma-minimal-dots-reporter",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "Very minimal dots output for karma reporter.",
   "main": "index.js",
   "repository": "https://github.com/luc-tielen/karma-minimal-dots-reporter.git",
