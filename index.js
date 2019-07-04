@@ -5,6 +5,7 @@ var noOp = function() {};
 var defaultConfig = {
   success: ".",
   failure: "F",
+  zenGarden: false,
   colors: true,
   showSummary: true,
   showLogs: true
@@ -41,6 +42,13 @@ var MinimalDotsReporter = function(baseReporterDecorator, config) {
   };
 
   this.specSuccess = function() {
+    if (cfg.zenGarden && Math.random() < 0.01) {
+      const plants = "🌳🌴🌲🌵☘️🍀🌻";
+      const plantIndex = Math.round(Math.random() * (plants.length - 1));
+      const plant = plants.slice(plantIndex, 1);
+      writeResult(plant);
+      return;
+    }
     writeResult(success);
   };
 
