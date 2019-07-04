@@ -42,10 +42,10 @@ var MinimalDotsReporter = function(baseReporterDecorator, config) {
   };
 
   this.specSuccess = function() {
-    if (cfg.zenGarden && Math.random() < 0.01) {
-      const plants = "🌳🌴🌲🌵☘️🍀🌻";
+    if (cfg.zenGarden && Math.random() < 0.05) {
+      const plants = ["🌳", "🌴", "🌲", "🌵", "☘️", "🍀", "🌻"];
       const plantIndex = Math.round(Math.random() * (plants.length - 1));
-      const plant = plants.slice(plantIndex, 1);
+      const plant = plants.slice(plantIndex, 1)[0];
       writeResult(plant);
       return;
     }
