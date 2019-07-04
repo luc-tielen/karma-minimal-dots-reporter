@@ -45,7 +45,7 @@ var MinimalDotsReporter = function(baseReporterDecorator, config) {
     if (cfg.zenGarden && Math.random() < 0.05) {
       const plants = ["🌳", "🌴", "🌲", "🌵", "☘️", "🍀", "🌻"];
       const plantIndex = Math.round(Math.random() * (plants.length - 1));
-      const plant = plants.slice(plantIndex, 1)[0];
+      const plant = plants.slice(plantIndex)[0];
       writeResult(plant);
       return;
     }
