@@ -53,7 +53,7 @@ var MinimalDotsReporter = function(baseReporterDecorator, config) {
   };
 
   this.specFailure = function() {
-    writeResult(failure);
+    writeResult(cfg.zenGarden ? "🔥" : failure);
   };
 
   if (!cfg.showSummary) {
