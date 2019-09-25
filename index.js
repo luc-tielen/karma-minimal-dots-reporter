@@ -11,6 +11,24 @@ var defaultConfig = {
   showLogs: true
 };
 
+var previouslyFailed = [];
+
+var getTestKey = function(result) {
+  return result.suite.join("/") + "/" + result.description;
+};
+
+var hasPreviouslyFailed = function(result) {
+  var key = getTestKey(result);
+  return previouslyFailed.includes(key);
+};
+
+var removePreviouslyFailed = function(result) {
+  var key = getTestKey(result);
+  previouslyFailed = previouslyFailed.filter(function(k) {
+    return k !== key;
+  });
+};
+
 var MinimalDotsReporter = function(baseReporterDecorator, config) {
   baseReporterDecorator(this);
   var cfg = Object.assign(defaultConfig, config.minDotsReporter || {});
@@ -41,18 +59,40 @@ var MinimalDotsReporter = function(baseReporterDecorator, config) {
     column = 0;
   };
 
-  this.specSuccess = function() {
+  this.specSuccess = function(browser, result) {
     if (cfg.zenGarden && Math.random() < 0.05) {
-      const plants = ["🌳", "🌴", "🌲", "🌵", "🍀", "🌻"];
-      const plantIndex = Math.round(Math.random() * (plants.length - 1));
-      const plant = plants.slice(plantIndex)[0];
-      writeResult(plant);
+      if (hasPreviouslyFailed(result)) {
+        const fighters = [
+          "👩🏻‍🚒",
+          "👩🏼‍🚒",
+          "👩🏽‍🚒",
+          "👩🏾‍🚒",
+          "👩🏿‍🚒",
+          "👨🏻‍🚒",
+          "👨🏼‍🚒",
+          "👨🏽‍🚒",
+          "👨🏾‍🚒",
+          "👨🏿‍🚒",
+          "👨‍🚒",
+          "👩‍🚒"
+        ];
+        const fighterIndex = Math.round(Math.random() * (fighters.length - 1));
+        const fighter = fighters.slice(fighterIndex)[0];
+        writeResult(fighter);
+        removePreviouslyFailed(result);
+      } else {
+        const plants = ["🌳", "🌴", "🌲", "🌵", "🍀", "🌻"];
+        const plantIndex = Math.round(Math.random() * (plants.length - 1));
+        const plant = plants.slice(plantIndex)[0];
+        writeResult(plant);
+      }
       return;
     }
     writeResult(success);
   };
 
-  this.specFailure = function() {
+  this.specFailure = function(browser, result) {
+    previouslyFailed.push(getTestKey(result));
     writeResult(cfg.zenGarden ? "🔥" : failure);
   };
 
